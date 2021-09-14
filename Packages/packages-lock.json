@@ -117,6 +117,70 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.postprocessing": {
+      "version": "3.1.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.physics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.render-pipelines.core": {
+      "version": "7.7.1",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.physics": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.render-pipelines.lightweight": {
+      "version": "7.7.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.render-pipelines.universal": "7.7.1",
+        "com.unity.postprocessing": "3.0.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.render-pipelines.universal": {
+      "version": "7.7.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.render-pipelines.core": "7.7.1",
+        "com.unity.shadergraph": "7.7.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.shadergraph": {
+      "version": "7.7.1",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.render-pipelines.core": "7.7.1"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.sysroot": {
+      "version": "0.1.19-preview",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.sysroot.linux-x86_64": {
+      "version": "0.1.14-preview",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "0.1.18-preview"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.test-framework": {
       "version": "1.1.27",
       "depth": 0,
@@ -146,6 +210,16 @@
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.particlesystem": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.toolchain.win-x86_64-linux-x86_64": {
+      "version": "0.1.21-preview",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.sysroot": "0.1.19-preview",
+        "com.unity.sysroot.linux-x86_64": "0.1.14-preview"
       },
       "url": "https://packages.unity.com"
     },

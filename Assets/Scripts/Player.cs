@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IKnockback
+public class Player : MonoBehaviour, IKnockback, IHittable
 {
     [Header("COMPONENTS")]
     public Rigidbody2D rb;
@@ -11,6 +11,8 @@ public class Player : MonoBehaviour, IKnockback
     [Header("STATS")]
     float jumpForce = 100;
 
+    [Header("PARTICLES")]
+    public GameObject hitEffect;
     // Start is called before the first frame update
     private void Awake() {
         RangeWeapon rw = (RangeWeapon) weapon.currentWeapon;
@@ -30,7 +32,7 @@ public class Player : MonoBehaviour, IKnockback
     }
 
     public void Jump(){
-        rb.AddForce(new Vector2(0, jumpForce));
+        //rb.AddForce(new Vector2(0, jumpForce));
     }
 
     public void Aim(Joystick joystick){
@@ -41,7 +43,15 @@ public class Player : MonoBehaviour, IKnockback
     }
 
     public void Knockback(float angle, float force){
-        rb.AddForce(-DegreesToVector2(angle) * force);
+        Vector2 dir = -DegreesToVector2(angle); 
+        rb.AddForce(dir * force);
+        // Instantiate(hitEffect, transform.position, Quaternion.LookRotation(-dir));
+    }
+
+    public void TakeHit(float angle){
+        Vector2 dir = DegreesToVector2(angle); 
+        Instantiate(hitEffect, transform.position, Quaternion.LookRotation(-dir));
+        ScreenShakeController.instance.StartShake(0.2f, 0.2f);
     }
 
     private Vector2 DegreesToVector2(float angle){

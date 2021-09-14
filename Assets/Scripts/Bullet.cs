@@ -23,23 +23,24 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col) {
         if((whatIsTarget.value & (1 << col.gameObject.layer)) > 0){
+            float angle = transform.rotation.eulerAngles.z + 180;
             if(CanReceiveKnockback(col.gameObject)){
-                AddKnockback(col.gameObject, transform.rotation.eulerAngles.z + 180, targetKnockback);
+                AddKnockback(col.gameObject, angle, targetKnockback);
             }
-            // IDamageable damageObj = col.GetComponent<IDamageable>();
-            // if(damageObj != null){
-                // damageObj.TakeDamage(damage);
-                // damageObj.AddStun(GetComponent<Rigidbody2D>().velocity.normalized);
-                DestroyBullet();
-            // }
+            if(CanBeHit(col.gameObject)){
+                Hit(col.gameObject, angle);
+            }
+            DestroyBullet();
         }
-        if(stayOnCollisionLayer){
-            if((collisionLayers.value & (1 << col.gameObject.layer)) > 0){
-                Rigidbody2D rb = GetComponent<Rigidbody2D>();
-                rb.velocity = new Vector2(0, 0);
-                rb.isKinematic = true;
-            }    
-        }
+
+        // if(stayOnCollisionLayer){
+        if((collisionLayers.value & (1 << col.gameObject.layer)) > 0){
+            //Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            //rb.velocity = new Vector2(0, 0);
+            //rb.isKinematic = true;
+            DestroyBullet();
+        }    
+        // }
     }
 
     private bool CanReceiveKnockback(GameObject go){
@@ -51,6 +52,17 @@ public class Bullet : MonoBehaviour
 
     private void AddKnockback(GameObject go, float angle, float force){
         go.GetComponent<IKnockback>().Knockback(angle, force);
+    }
+
+    private bool CanBeHit(GameObject go){
+        if(go.GetComponent<IHittable>() != null){
+            return true;
+        }
+        return false;
+    }
+
+    private void Hit(GameObject go, float angle){
+        go.GetComponent<IHittable>().TakeHit(angle);
     }
 
 }

@@ -28,6 +28,9 @@ public class RangeWeapon : Weapon
     public GameObject projectile;
     public Transform firePoint;
 
+    [Header("EFFECTS")]
+    public GameObject shootEffect;
+
     public delegate void shootCallback(float angle, float force);
     public shootCallback OnShoot;
 
@@ -82,7 +85,9 @@ public class RangeWeapon : Weapon
         //AudioManager.instance.Play("Shoot1");
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(bullet.transform.right * shootForce, ForceMode2D.Impulse);
+        ScreenShakeController.instance.StartShake(0.1f, 0.1f);
         
+        Instantiate(shootEffect, transform.position, Quaternion.LookRotation(DegreesToVector2(angle)));
         // Delegate
         OnShoot(angle, controllerKnockback);
     }
@@ -109,6 +114,11 @@ public class RangeWeapon : Weapon
         }
         return result;
     }
+
+    private Vector2 DegreesToVector2(float angle){
+        return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+    }
+
     private bool HaveEnoughBullets(){
         if(bulletsLeft <= 0){
             return false;
