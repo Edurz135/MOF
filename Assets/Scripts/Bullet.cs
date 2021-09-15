@@ -33,14 +33,9 @@ public class Bullet : MonoBehaviour
             DestroyBullet();
         }
 
-        // if(stayOnCollisionLayer){
         if((collisionLayers.value & (1 << col.gameObject.layer)) > 0){
-            //Rigidbody2D rb = GetComponent<Rigidbody2D>();
-            //rb.velocity = new Vector2(0, 0);
-            //rb.isKinematic = true;
             DestroyBullet();
         }    
-        // }
     }
 
     private bool CanReceiveKnockback(GameObject go){
