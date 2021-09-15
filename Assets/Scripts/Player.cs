@@ -7,13 +7,12 @@ public class Player : MonoBehaviour, IKnockback, IHittable
     [Header("COMPONENTS")]
     public Rigidbody2D rb;
     public WeaponHolderController weapon;
-
+    public TimeManager timeM;
     [Header("STATS")]
-    float jumpForce = 100;
 
     [Header("PARTICLES")]
     public GameObject hitEffect;
-    // Start is called before the first frame update
+
     private void Awake() {
         RangeWeapon rw = (RangeWeapon) weapon.currentWeapon;
         rw.OnShoot += Knockback;
@@ -28,7 +27,9 @@ public class Player : MonoBehaviour, IKnockback, IHittable
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown("z")){
+            timeM.DoSlowmotion();
+        }
     }
 
     public void Jump(){
@@ -57,4 +58,6 @@ public class Player : MonoBehaviour, IKnockback, IHittable
     private Vector2 DegreesToVector2(float angle){
         return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
     }
+
+    
 }

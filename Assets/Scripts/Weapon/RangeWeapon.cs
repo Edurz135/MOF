@@ -88,8 +88,9 @@ public class RangeWeapon : Weapon
         ScreenShakeController.instance.StartShake(0.1f, 0.1f);
         
         Instantiate(shootEffect, transform.position, Quaternion.LookRotation(DegreesToVector2(angle)));
+        
         // Delegate
-        OnShoot(angle, controllerKnockback);
+        OnShoot(angle, controllerKnockback / (isShotgun ? bulletsPerTap : 1));
     }
 
     private float[] GetBulletDirections(float rangeOfShoot, float centerOfRange, int nBullets){
