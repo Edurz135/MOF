@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public Player owner;
     public virtual void Use(){}
 }

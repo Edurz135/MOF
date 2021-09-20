@@ -16,10 +16,10 @@ public class Player : MonoBehaviour, IKnockback, IHittable
     [Header("PARTICLES")]
     public GameObject hitEffect;
 
-    private void Awake() {
-        RangeWeapon rw = (RangeWeapon) weaponHolder.currentWeapon;
-        rw.OnShoot += Knockback;
-    }
+    // private void Awake() {
+    //     RangeWeapon rw = (RangeWeapon) weaponHolder.currentWeapon;
+    //     rw.OnShoot += Knockback;
+    // }
 
     void Start()
     {
@@ -36,35 +36,16 @@ public class Player : MonoBehaviour, IKnockback, IHittable
 
         if(Input.GetKeyDown(KeyCode.Space)){
             if(pickUpController.AreNearbyItems()){
-                Debug.Log("PICK");
-                PickUpItem();
-                Debug.Log("setting");
-                weaponHolder.currentWeapon = inventory.GetCurrentItem().GetComponent<Weapon>();
-                Debug.Log("finish");
+                pickUpController.PickUp();
             } else {
-                Debug.Log("CHANGE");
-                SetItemOnWeaponHolder();
+                inventory.NextItem();
             }
         }
-    }
-
-    public void Jump(){
-        //rb.AddForce(new Vector2(0, jumpForce));
-    }
-
-    public void PickUpItem(){
-        pickUpController.PickUp();
-        //configurar inputs para inventario.
-    }
-
-    public void SetItemOnWeaponHolder(){
-        weaponHolder.currentWeapon = inventory.GetNextItem().GetComponent<Weapon>();
     }
 
     public void Aim(Joystick joystick){
         weaponHolder.Attack();
         weaponHolder.AimToDirection(joystick.Direction);
-        //Debug.Log(joystick.Horizontal);
         //rb.AddForce(new Vector2(0, jumpForce));
     }
 

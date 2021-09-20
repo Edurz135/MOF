@@ -143,6 +143,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.03
       objectReference: {fileID: 0}
+    - target: {fileID: 6222371334577710609, guid: 275fad650087b964cbd0df1ce3a4e37e,
+        type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1058142958}
+    - target: {fileID: 6418214884544918490, guid: 275fad650087b964cbd0df1ce3a4e37e,
+        type: 3}
+      propertyPath: owner
+      value: 
+      objectReference: {fileID: 1058142958}
     - target: {fileID: 6418214884544918490, guid: 275fad650087b964cbd0df1ce3a4e37e,
         type: 3}
       propertyPath: nItems
@@ -158,6 +168,11 @@ PrefabInstance:
       propertyPath: items.Array.data[0]
       value: 
       objectReference: {fileID: 885160262}
+    - target: {fileID: 6418214884544918490, guid: 275fad650087b964cbd0df1ce3a4e37e,
+        type: 3}
+      propertyPath: weaponHolderController
+      value: 
+      objectReference: {fileID: 1594428849}
     - target: {fileID: 6747072896184274405, guid: 275fad650087b964cbd0df1ce3a4e37e,
         type: 3}
       propertyPath: pickableItems.Array.size

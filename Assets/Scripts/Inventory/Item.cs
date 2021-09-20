@@ -11,14 +11,11 @@ public class Item : ScriptableObject {
     public int bulletsPerTap;
 
     [Header("STATS")]
-    public float shootForce;
-    public float timeBetweenShoots;
-    private bool canShoot = true;
-    public float reloadTime;
-    private bool isReloading = false;
+    public float shootForce = 20;
+    public float timeBetweenShoots = 0.3f;
+    public float reloadTime = 1f;
 
-    public int magazineSize;
-    public int bulletsLeft;
+    public int magazineSize = 12;
 
     public float controllerKnockback = 300f;
     public float targetKnockback = 500f;
@@ -26,7 +23,7 @@ public class Item : ScriptableObject {
     [Header("COMPONENTS")]
     public GameObject projectile;
     public Transform firePoint;
-    public Sprite body = null; 
+    public Sprite body = null;
 
     [Header("EFFECTS")]
     public GameObject shootEffect;

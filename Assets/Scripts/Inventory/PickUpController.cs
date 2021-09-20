@@ -17,7 +17,6 @@ public class PickUpController : MonoBehaviour
     public void PickUp(){
         if(AreNearbyItems()){
             inventory.PickUpItem(pickableItems[0]);
-            pickableItems.Remove(pickableItems[0]);
         }
     }
 

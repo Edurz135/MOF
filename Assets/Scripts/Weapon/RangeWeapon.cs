@@ -89,6 +89,9 @@ public class RangeWeapon : Weapon
         
         Instantiate(shootEffect, firePoint.position, Quaternion.LookRotation(DegreesToVector2(angle)));
         
+        if(CanReceiveKnockback(owner.gameObject)){
+            AddKnockback(owner.gameObject, angle, controllerKnockback / (isShotgun ? bulletsPerTap : 1));
+        }
         // Delegate
         //OnShoot(angle, controllerKnockback / (isShotgun ? bulletsPerTap : 1));
     }
@@ -131,5 +134,17 @@ public class RangeWeapon : Weapon
     }
     private void SetIsReloadingFalse(){
         isReloading = false;
+    }
+
+
+    private bool CanReceiveKnockback(GameObject go){
+        if(go.GetComponent<IKnockback>() != null){
+            return true;
+        }
+        return false;
+    }
+
+    private void AddKnockback(GameObject go, float angle, float force){
+        go.GetComponent<IKnockback>().Knockback(angle, force);
     }
 }

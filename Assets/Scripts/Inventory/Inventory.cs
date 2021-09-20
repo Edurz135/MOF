@@ -6,35 +6,13 @@ public class Inventory : MonoBehaviour
 {
 	public int space = 3;	// Amount of item spaces
     public int currentItemIndex = 0;
-
+    public Player owner;
 	// Our current list of items in the inventory
 	public List<GameObject> items = new List<GameObject>();
     public int nItems;
 
+    public WeaponHolderController weaponHolderController;
     public Transform handTransform;
-
-    public GameObject GetCurrentItem(){
-        return items[currentItemIndex];
-    }
-
-    public GameObject GetNextItem(){
-        if(nItems <= 1) return null;
-        Debug.Log("ämtes " + currentItemIndex);
-        currentItemIndex = (currentItemIndex + 1) % nItems;
-        Debug.Log("despues" + currentItemIndex);
-        
-        items[currentItemIndex].SetActive(true);
-        UnusedItemsSetActiveFalse();
-        return items[currentItemIndex];
-    }
-
-    private void UnusedItemsSetActiveFalse(){
-        for(int i = 0; i < nItems; i++){
-            if(i != currentItemIndex){
-                items[i].SetActive(false);
-            }
-        }
-    }
 
     public void PickUpItem(GameObject item){
         ItemPickUp itemPick = item.GetComponent<ItemPickUp>();
@@ -48,6 +26,18 @@ public class Inventory : MonoBehaviour
         itemPick.PickUp();
     }
 
+    public void NextItem(){
+        int newIdx = (currentItemIndex + 1) % nItems;
+        SetWeaponWithIndex(newIdx);
+    }
+
+    private void UnusedItemsSetActiveFalse(){
+        for(int i = 0; i < nItems; i++){
+            if(i != currentItemIndex){
+                items[i].SetActive(false);
+            }
+        }
+    }
 
     public bool AreFreeSlots(){
         if (nItems >= space) {
@@ -65,7 +55,9 @@ public class Inventory : MonoBehaviour
         item.transform.position = handTransform.position;
         item.transform.rotation = handTransform.rotation;
         item.transform.parent = handTransform;
-        GetNextItem();
+        UnusedItemsSetActiveFalse();
+        SetWeaponWithIndex(nItems - 1);
+        item.GetComponent<Weapon>().owner = owner;
 	}
 
     private void ChangeItem(GameObject item){
@@ -79,5 +71,14 @@ public class Inventory : MonoBehaviour
         item.GetComponent<ItemPickUp>().Drop();
         item.transform.position = transform.position;
         item.transform.parent = null; 
+    }
+
+    private void SetWeaponWithIndex(int idx){
+        if(idx >= nItems) return;
+
+        currentItemIndex = idx;
+        UnusedItemsSetActiveFalse();
+        items[currentItemIndex].SetActive(true);
+        weaponHolderController.currentWeapon = items[currentItemIndex].GetComponent<Weapon>();
     }
 }
