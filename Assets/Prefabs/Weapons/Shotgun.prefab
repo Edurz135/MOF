@@ -40,6 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7118054387595112090}
   - component: {fileID: 321082226133702618}
+  - component: {fileID: 8171570907671053277}
   m_Layer: 0
   m_Name: body
   m_TagString: Untagged
@@ -112,6 +113,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8171570907671053277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2542411375926216253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 0.39999998, a: 1}
+  m_Intensity: 0.7
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 1
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &8515697149196179400
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,9 +164,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8828008544554315684}
   - component: {fileID: 4624664267240001454}
+  - component: {fileID: 485720126}
   - component: {fileID: 485720127}
   - component: {fileID: 485720129}
-  - component: {fileID: 485720126}
   m_Layer: 11
   m_Name: Shotgun
   m_TagString: Untagged
@@ -160,6 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7692c9f978f78664f8489737279009ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 0}
   weaponName: Shotgun
   isShotgun: 1
   shotgunRange: 30
@@ -176,6 +219,19 @@ MonoBehaviour:
   firePoint: {fileID: 7342114144902147289}
   shootEffect: {fileID: 5985392640057890362, guid: a37458c8d4cea3a4e9ae7b4ee71f0fb8,
     type: 3}
+--- !u!114 &485720126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8515697149196179400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a6d1d6ce05b51428ec16aef34ae527, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasPickedUp: 0
 --- !u!50 &485720127
 Rigidbody2D:
   serializedVersion: 4
@@ -223,16 +279,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &485720126
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8515697149196179400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a6d1d6ce05b51428ec16aef34ae527, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hasPickedUp: 0

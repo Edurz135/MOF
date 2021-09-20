@@ -34,12 +34,13 @@ public class Player : MonoBehaviour, IKnockback, IHittable
             timeM.DoSlowmotion();
         }
 
-        if(Input.GetKeyDown(KeyCode.Space)){
-            if(pickUpController.AreNearbyItems()){
-                pickUpController.PickUp();
-            } else {
-                inventory.NextItem();
-            }
+    }
+
+    public void PickUp(){
+        if(pickUpController.AreNearbyItems()){
+            pickUpController.PickUp();
+        } else {
+            inventory.NextItem();
         }
     }
 

@@ -19,6 +19,7 @@ public class Inventory : MonoBehaviour
         if(itemPick.hasPickedUp) return;
         
         if(AreFreeSlots()){
+            nItems ++;
             Add(item);
         }else{
             ChangeItem(item);
@@ -40,21 +41,20 @@ public class Inventory : MonoBehaviour
     }
 
     public bool AreFreeSlots(){
-        if (nItems >= space) {
-            Debug.Log ("Not enough space.");
-            return false;
+        if (nItems < space) {
+            return true;
         }
-        return true;
+        return false;
     }
 	
     // Add a new item if enough room
 	private void Add (GameObject item)
 	{
-        nItems ++;
         items.Add(item);
         item.transform.position = handTransform.position;
         item.transform.rotation = handTransform.rotation;
         item.transform.parent = handTransform;
+        item.transform.localScale = new Vector3(1, 1, 1);
         UnusedItemsSetActiveFalse();
         SetWeaponWithIndex(nItems - 1);
         item.GetComponent<Weapon>().owner = owner;
