@@ -6,15 +6,18 @@ public class Player : MonoBehaviour, IKnockback, IHittable
 {
     [Header("COMPONENTS")]
     public Rigidbody2D rb;
-    public WeaponHolderController weapon;
-    public TimeManager timeM;
+    public WeaponHolderController weaponHolder;
+    public TimeManager timeM; //borrar
+    public Inventory inventory;
+    public PickUpController pickUpController;
+
     [Header("STATS")]
 
     [Header("PARTICLES")]
     public GameObject hitEffect;
 
     private void Awake() {
-        RangeWeapon rw = (RangeWeapon) weapon.currentWeapon;
+        RangeWeapon rw = (RangeWeapon) weaponHolder.currentWeapon;
         rw.OnShoot += Knockback;
     }
 
@@ -27,8 +30,21 @@ public class Player : MonoBehaviour, IKnockback, IHittable
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("z")){
+        if (Input.GetKeyDown("z")){ // borrar
             timeM.DoSlowmotion();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space)){
+            if(pickUpController.AreNearbyItems()){
+                Debug.Log("PICK");
+                PickUpItem();
+                Debug.Log("setting");
+                weaponHolder.currentWeapon = inventory.GetCurrentItem().GetComponent<Weapon>();
+                Debug.Log("finish");
+            } else {
+                Debug.Log("CHANGE");
+                SetItemOnWeaponHolder();
+            }
         }
     }
 
@@ -36,9 +52,18 @@ public class Player : MonoBehaviour, IKnockback, IHittable
         //rb.AddForce(new Vector2(0, jumpForce));
     }
 
+    public void PickUpItem(){
+        pickUpController.PickUp();
+        //configurar inputs para inventario.
+    }
+
+    public void SetItemOnWeaponHolder(){
+        weaponHolder.currentWeapon = inventory.GetNextItem().GetComponent<Weapon>();
+    }
+
     public void Aim(Joystick joystick){
-        weapon.Attack();
-        weapon.AimToDirection(joystick.Direction);
+        weaponHolder.Attack();
+        weaponHolder.AimToDirection(joystick.Direction);
         //Debug.Log(joystick.Horizontal);
         //rb.AddForce(new Vector2(0, jumpForce));
     }

@@ -11,9 +11,17 @@ public class Inventory : MonoBehaviour
 	public List<GameObject> items = new List<GameObject>();
     public int nItems;
 
+    public Transform handTransform;
+
+    public GameObject GetCurrentItem(){
+        return items[currentItemIndex];
+    }
+
     public GameObject GetNextItem(){
-        if(nItems <= 1) return items[0];
+        if(nItems <= 1) return null;
+        Debug.Log("ämtes " + currentItemIndex);
         currentItemIndex = (currentItemIndex + 1) % nItems;
+        Debug.Log("despues" + currentItemIndex);
         
         items[currentItemIndex].SetActive(true);
         UnusedItemsSetActiveFalse();
@@ -21,7 +29,7 @@ public class Inventory : MonoBehaviour
     }
 
     private void UnusedItemsSetActiveFalse(){
-        for(int i = 0; i < nItems; i++ ){
+        for(int i = 0; i < nItems; i++){
             if(i != currentItemIndex){
                 items[i].SetActive(false);
             }
@@ -37,8 +45,7 @@ public class Inventory : MonoBehaviour
         }else{
             ChangeItem(item);
         }
-
-        itemPick.hasPickedUp = true;
+        itemPick.PickUp();
     }
 
 
@@ -55,29 +62,22 @@ public class Inventory : MonoBehaviour
 	{
         nItems ++;
         items.Add(item);
-        item.transform.position = transform.position;
-        item.transform.parent = transform; 
+        item.transform.position = handTransform.position;
+        item.transform.rotation = handTransform.rotation;
+        item.transform.parent = handTransform;
+        GetNextItem();
 	}
 
     private void ChangeItem(GameObject item){
         Drop(items[currentItemIndex]);
         Add(item);
+        UnusedItemsSetActiveFalse();
     }
 
     private void Drop(GameObject item){
 		items.Remove(item);
-        item.GetComponent<ItemPickUp>().hasPickedUp = false;
+        item.GetComponent<ItemPickUp>().Drop();
         item.transform.position = transform.position;
         item.transform.parent = null; 
     }
-
-	// Remove an item
-	// public void Remove (GameObject item)
-	// {
-    //     nItems --;
-	// 	items.Remove(item);
-    //     item.GetComponent<ItemPickUp>().hasPickedUp = false;
-    //     item.transform.position = transform.position;
-    //     item.transform.parent = null; 
-	// }
 }
