@@ -71,13 +71,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -5047458736925579825, guid: 1dc05304d42db734baf6376911aabaab,
+  m_Sprite: {fileID: -3374355278413665953, guid: 4512ccda70ec08e4b8183afc6c88994a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.375, y: 1.4375}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -214,7 +214,7 @@ MonoBehaviour:
   bulletsLeft: 6
   controllerKnockback: 300
   targetKnockback: 500
-  projectile: {fileID: 6748996181600134251, guid: 6f5466da3ee721643ac5fd6f2caf7e00,
+  projectile: {fileID: 1375688843328386467, guid: 7a621954fd11b5c4e96b61be244121a9,
     type: 3}
   firePoint: {fileID: 5938845700816306020}
   shootEffect: {fileID: 5985392640057890362, guid: a37458c8d4cea3a4e9ae7b4ee71f0fb8,
@@ -266,7 +266,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.13475752, y: -0.06444919}
+  m_Offset: {x: 0.41, y: -0.06444919}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}

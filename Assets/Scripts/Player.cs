@@ -12,18 +12,16 @@ public class Player : MonoBehaviour, IKnockback, IHittable
     public PickUpController pickUpController;
 
     [Header("STATS")]
+    public float baseHealth = 100f;
+    public float currentHealth;
+    public float jumpForce = 500f;
 
     [Header("PARTICLES")]
     public GameObject hitEffect;
 
-    // private void Awake() {
-    //     RangeWeapon rw = (RangeWeapon) weaponHolder.currentWeapon;
-    //     rw.OnShoot += Knockback;
-    // }
-
     void Start()
     {
-
+        currentHealth = baseHealth;
     }
 
 
@@ -36,6 +34,10 @@ public class Player : MonoBehaviour, IKnockback, IHittable
 
     }
 
+    public void Jump(){
+        rb.AddForce(new Vector2(0, jumpForce));
+    }
+
     public void PickUp(){
         if(pickUpController.AreNearbyItems()){
             pickUpController.PickUp();
@@ -44,9 +46,9 @@ public class Player : MonoBehaviour, IKnockback, IHittable
         }
     }
 
-    public void Aim(Joystick joystick){
+    public void Aim(Vector2 direction){
         weaponHolder.Attack();
-        weaponHolder.AimToDirection(joystick.Direction);
+        weaponHolder.AimToDirection(direction);
         //rb.AddForce(new Vector2(0, jumpForce));
     }
 
@@ -60,6 +62,7 @@ public class Player : MonoBehaviour, IKnockback, IHittable
         Vector2 dir = DegreesToVector2(angle); 
         Instantiate(hitEffect, transform.position, Quaternion.LookRotation(-dir));
         ScreenShakeController.instance.StartShake(0.2f, 0.2f);
+        currentHealth -= 10f;
     }
 
     private Vector2 DegreesToVector2(float angle){

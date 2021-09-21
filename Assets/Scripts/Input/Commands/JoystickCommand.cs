@@ -8,6 +8,9 @@ public class JoystickCommand : Command
         //player.Jump();
     }
     public void execute(Player player, Joystick joystick){
-        player.Aim(joystick);
+        player.Aim(joystick.Direction);
+    }
+    public void execute(Player player, Vector2 dir){
+        player.Aim(dir);
     }
 }

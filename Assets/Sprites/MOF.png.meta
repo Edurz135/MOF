@@ -1,25 +1,28 @@
 fileFormatVersion: 2
-guid: 1dc05304d42db734baf6376911aabaab
+guid: 4512ccda70ec08e4b8183afc6c88994a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4339371590328948898
-    second: PC Computer - Nuclear Throne - Bullet Weapons_0
+      213: -2172243206331883378
+    second: MOF_0
   - first:
-      213: -5047458736925579825
-    second: PC Computer - Nuclear Throne - Bullet Weapons_1
+      213: -3374355278413665953
+    second: MOF_1
   - first:
-      213: -3389845397455544152
-    second: PC Computer - Nuclear Throne - Bullet Weapons_2
+      213: 7857208881559670566
+    second: MOF_2
   - first:
-      213: 6702433518564021839
-    second: PC Computer - Nuclear Throne - Bullet Weapons_3
+      213: -1785207306650406588
+    second: MOF_3
   - first:
-      213: 4461188924031804206
-    second: PC Computer - Nuclear Throne - Bullet Weapons_4
+      213: -2045506939270714997
+    second: MOF_4
   - first:
-      213: 2848967679694121
-    second: PC Computer - Nuclear Throne - Bullet Weapons_5
+      213: -6338509724063607967
+    second: MOF_5
+  - first:
+      213: 8032197474014129575
+    second: MOF_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -60,7 +63,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 16
@@ -129,13 +132,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: PC Computer - Nuclear Throne - Bullet Weapons_0
+      name: MOF_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 64
-        width: 22
-        height: 23
+        x: 0
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +146,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e576502978477c3c0800000000000000
-      internalID: -4339371590328948898
+      spriteID: e8025d81054aad1e0800000000000000
+      internalID: -2172243206331883378
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PC Computer - Nuclear Throne - Bullet Weapons_1
+      name: MOF_1
       rect:
         serializedVersion: 2
-        x: 50
-        y: 64
-        width: 22
-        height: 23
+        x: 16
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +167,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc5eb177503d3f9b0800000000000000
-      internalID: -5047458736925579825
+      spriteID: f59603c90c1eb21d0800000000000000
+      internalID: -3374355278413665953
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PC Computer - Nuclear Throne - Bullet Weapons_2
+      name: MOF_2
       rect:
         serializedVersion: 2
-        x: 122
-        y: 64
-        width: 22
-        height: 23
+        x: 32
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +188,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a06b293299d4f0d0800000000000000
-      internalID: -3389845397455544152
+      spriteID: 62f886739d96a0d60800000000000000
+      internalID: 7857208881559670566
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PC Computer - Nuclear Throne - Bullet Weapons_3
+      name: MOF_3
       rect:
         serializedVersion: 2
-        x: 146
-        y: 64
-        width: 22
-        height: 23
+        x: 0
+        y: 32
+        width: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,20 +209,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f461eac26c3d30d50800000000000000
-      internalID: 6702433518564021839
+      spriteID: 441bbacb96ba937e0800000000000000
+      internalID: -1785207306650406588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PC Computer - Nuclear Throne - Bullet Weapons_4
+      name: MOF_4
       rect:
         serializedVersion: 2
-        x: 194
-        y: 64
-        width: 22
-        height: 23
+        x: 0
+        y: 16
+        width: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -227,20 +230,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e23a2d4a0b359ed30800000000000000
-      internalID: 4461188924031804206
+      spriteID: b892c2bb646ec93e0800000000000000
+      internalID: -2045506939270714997
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: PC Computer - Nuclear Throne - Bullet Weapons_5
+      name: MOF_5
       rect:
         serializedVersion: 2
-        x: 266
-        y: 64
-        width: 22
-        height: 23
+        x: 0
+        y: 0
+        width: 32
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,8 +251,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 925568afe1f1a0000800000000000000
-      internalID: 2848967679694121
+      spriteID: 16354d32df61908a0800000000000000
+      internalID: -6338509724063607967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MOF_6
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ade664db09187f60800000000000000
+      internalID: 8032197474014129575
       vertices: []
       indices: 
       edges: []
