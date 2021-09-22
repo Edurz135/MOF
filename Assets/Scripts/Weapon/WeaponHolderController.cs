@@ -5,7 +5,7 @@ using UnityEngine;
 public class WeaponHolderController : MonoBehaviour
 {
     public Weapon currentWeapon;
-    private Vector2 currentDir;
+    public Vector2 currentDir;
     public float rotateSpeed;
     public GameObject pivot;
     

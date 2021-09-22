@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerController : MonoBehaviour, IKnockback, IHittable
+public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObservable
 {
     [Header("COMPONENTS")]
     public Rigidbody2D rb;
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable
     public TimeManager timeM; //borrar
     public Inventory inventory;
     public PickUpController pickUpController;
+    public Camera camera;
 
     [Header("STATS")]
     public float baseHealth = 100f;
@@ -19,19 +21,45 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable
     [Header("PARTICLES")]
     public GameObject hitEffect;
 
+    private PhotonView PV;
+    private Vector2 weaponDir;
+
+    private void Awake() {
+        PV = GetComponent<PhotonView>();
+    }
+
     void Start()
     {
-        currentHealth = baseHealth;
+        AddObservable();
+        if(PV.IsMine){
+            currentHealth = baseHealth;
+        }else{
+            Destroy(rb);
+            Destroy(camera);
+        }
     }
 
 
     // Update is called once per frame
+    Vector2 shootDirection;
     void Update()
     {
-        if (Input.GetKeyDown("z")){ // borrar
-            timeM.DoSlowmotion();
-        }
+        if(PV.IsMine){
+            if (Input.GetKeyDown("z")){ // borrar
+                timeM.DoSlowmotion();
+            }
 
+            if (Input.GetMouseButtonDown(0)){
+                Attack();
+            }
+            shootDirection = Input.mousePosition;
+            shootDirection = camera.ScreenToWorldPoint(shootDirection);
+            shootDirection = shootDirection - (Vector2) transform.position;
+            Aim(shootDirection);
+        }else{
+            Aim(weaponDir);
+            //return;
+        }
     }
 
     public void Jump(){
@@ -46,8 +74,12 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable
         }
     }
 
-    public void Aim(Vector2 direction){
+    public void Attack(){
         weaponHolder.Attack();
+    }
+
+    public void Aim(Vector2 direction){
+        //weaponHolder.Attack();
         weaponHolder.AimToDirection(direction);
         //rb.AddForce(new Vector2(0, jumpForce));
     }
@@ -69,5 +101,20 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable
         return new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+        if(stream.IsWriting){
+            stream.SendNext(weaponHolder.currentDir);
+        }else{
+            weaponDir = (Vector2) stream.ReceiveNext();
+        }
+    }
+
+    private void AddObservable()
+    {
+        if (!PV.ObservedComponents.Contains(this))
+        {
+            PV.ObservedComponents.Add(this);
+        }
+    }
     
 }
