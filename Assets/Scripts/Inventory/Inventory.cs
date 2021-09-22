@@ -6,7 +6,7 @@ public class Inventory : MonoBehaviour
 {
 	public int space = 3;	// Amount of item spaces
     public int currentItemIndex = 0;
-    public Player owner;
+    public PlayerController owner;
 	// Our current list of items in the inventory
 	public List<GameObject> items = new List<GameObject>();
     public int nItems;

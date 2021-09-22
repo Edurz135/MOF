@@ -10,7 +10,7 @@ public class InputHandler : MonoBehaviour
     public PickUpCommand pickUpCommand;
     public JumpCommand jumpCommand;
     public Joystick joystick;
-    public Player player;
+    public PlayerController player;
     public KeyCode pickUpButton;
     public KeyCode jumpButton;
 

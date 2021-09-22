@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PickUpCommand : Command
 {
-    public override void execute(Player player){
+    public override void execute(PlayerController player){
         player.PickUp();
     }
 }

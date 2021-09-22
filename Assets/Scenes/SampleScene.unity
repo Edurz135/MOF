@@ -902,7 +902,7 @@ MonoBehaviour:
   joystick: {fileID: 424909555}
   player: {fileID: 1058142958}
   pickUpButton: 113
-  jumpButton: 97
+  jumpButton: 32
 --- !u!4 &371646214
 Transform:
   m_ObjectHideFlags: 0
@@ -3141,8 +3141,8 @@ MonoBehaviour:
   jumpCommand: {fileID: 371646216}
   joystick: {fileID: 1519767117}
   player: {fileID: 1670636002}
-  pickUpButton: 101
-  jumpButton: 100
+  pickUpButton: 44
+  jumpButton: 109
 --- !u!4 &1505227238
 Transform:
   m_ObjectHideFlags: 0

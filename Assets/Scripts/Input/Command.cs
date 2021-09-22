@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Command : MonoBehaviour
 {
-    public virtual void execute(Player player){}
+    public virtual void execute(PlayerController player){}
 }

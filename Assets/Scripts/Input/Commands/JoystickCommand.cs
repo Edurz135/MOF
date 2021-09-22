@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class JoystickCommand : Command
 {
-    public override void execute(Player player){
+    public override void execute(PlayerController player){
         //player.Jump();
     }
-    public void execute(Player player, Joystick joystick){
+    public void execute(PlayerController player, Joystick joystick){
         player.Aim(joystick.Direction);
     }
-    public void execute(Player player, Vector2 dir){
+    public void execute(PlayerController player, Vector2 dir){
         player.Aim(dir);
     }
 }
