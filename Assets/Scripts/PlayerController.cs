@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using TMPro;
 
-public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObservable
+public class PlayerController : MonoBehaviour, IKnockback, IHittable, IDamageable, IPunObservable
 {
     [Header("COMPONENTS")]
     public Rigidbody2D rb;
@@ -12,6 +13,10 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObserv
     public Inventory inventory;
     public PickUpController pickUpController;
     public Camera camera;
+    public GameObject canvas;
+    private PlayerManager playerManager;
+    [Space]
+    public TMP_Text healthTxt;
 
     [Header("STATS")]
     public float baseHealth = 100f;
@@ -26,16 +31,17 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObserv
 
     private void Awake() {
         PV = GetComponent<PhotonView>();
+        playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
     }
 
     void Start()
     {
         AddObservable();
-        if(PV.IsMine){
-            currentHealth = baseHealth;
-        }else{
+        currentHealth = baseHealth;
+        if(!PV.IsMine){
             Destroy(rb);
-            Destroy(camera);
+            Destroy(canvas);
+            Destroy(camera.gameObject);
         }
     }
 
@@ -45,20 +51,26 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObserv
     void Update()
     {
         if(PV.IsMine){
-            if (Input.GetKeyDown("z")){ // borrar
-                timeM.DoSlowmotion();
+            // if (Input.GetKeyDown("z")){ // borrar
+            //     timeM.DoSlowmotion();
+            // }
+            
+            if(Input.GetKeyDown("space")){
+                TakeDamage(10f);
             }
 
             if (Input.GetMouseButtonDown(0)){
                 Attack();
             }
+
             shootDirection = Input.mousePosition;
             shootDirection = camera.ScreenToWorldPoint(shootDirection);
             shootDirection = shootDirection - (Vector2) transform.position;
             Aim(shootDirection);
+
+            UpdateUI();
         }else{
             Aim(weaponDir);
-            //return;
         }
     }
 
@@ -67,11 +79,11 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObserv
     }
 
     public void PickUp(){
-        if(pickUpController.AreNearbyItems()){
-            pickUpController.PickUp();
-        } else {
-            inventory.NextItem();
-        }
+        // if(pickUpController.AreNearbyItems()){
+        //     pickUpController.PickUp();
+        // } else {
+        // }
+        inventory.NextItem();
     }
 
     public void Attack(){
@@ -79,12 +91,14 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObserv
     }
 
     public void Aim(Vector2 direction){
-        //weaponHolder.Attack();
         weaponHolder.AimToDirection(direction);
-        //rb.AddForce(new Vector2(0, jumpForce));
     }
 
     public void Knockback(float angle, float force){
+        if(rb == null){
+            Debug.Log("RB is null");
+            return;
+        }
         Vector2 dir = -DegreesToVector2(angle); 
         rb.AddForce(dir * force);
         // Instantiate(hitEffect, transform.position, Quaternion.LookRotation(-dir));
@@ -94,7 +108,30 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObserv
         Vector2 dir = DegreesToVector2(angle); 
         Instantiate(hitEffect, transform.position, Quaternion.LookRotation(-dir));
         ScreenShakeController.instance.StartShake(0.2f, 0.2f);
-        currentHealth -= 10f;
+    }
+
+    public void TakeDamage(float amount){
+		PV.RPC("RPC_TakeDamage", RpcTarget.All, amount);
+    }
+
+	[PunRPC]
+	void RPC_TakeDamage(float amount){
+		if(!PV.IsMine)
+			return;
+
+		currentHealth -= amount;
+
+		if(currentHealth <= 0){
+            this.Die();
+        }
+	}
+
+    void Die(){
+		playerManager.Die();
+	}
+
+    void UpdateUI(){
+        healthTxt.text = "HEALTH: " + currentHealth;
     }
 
     private Vector2 DegreesToVector2(float angle){
@@ -104,8 +141,10 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IPunObserv
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
         if(stream.IsWriting){
             stream.SendNext(weaponHolder.currentDir);
+            stream.SendNext(currentHealth);
         }else{
             weaponDir = (Vector2) stream.ReceiveNext();
+            currentHealth = (float) stream.ReceiveNext();
         }
     }
 

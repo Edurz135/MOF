@@ -27,8 +27,13 @@ public class Bullet : MonoBehaviour
             if(CanReceiveKnockback(col.gameObject)){
                 AddKnockback(col.gameObject, angle, targetKnockback);
             }
+
             if(CanBeHit(col.gameObject)){
                 Hit(col.gameObject, angle);
+            }
+
+            if(CanBeDamaged(col.gameObject)){
+                Damage(col.gameObject, damage);
             }
             DestroyBullet();
         }
@@ -58,6 +63,17 @@ public class Bullet : MonoBehaviour
 
     private void Hit(GameObject go, float angle){
         go.GetComponent<IHittable>().TakeHit(angle);
+    }
+
+    private bool CanBeDamaged(GameObject go){
+        if(go.GetComponent<IDamageable>() != null){
+            return true;
+        }
+        return false;
+    }
+
+    private void Damage(GameObject go, float amount){
+        go.GetComponent<IDamageable>().TakeDamage(amount);
     }
 
 }

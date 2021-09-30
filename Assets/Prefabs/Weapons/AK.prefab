@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6702441714721236150}
   - component: {fileID: 5876312515913120309}
   - component: {fileID: 2861799525831813717}
+  - component: {fileID: 2223647539691300587}
   m_Layer: 11
   m_Name: AK
   m_TagString: Untagged
@@ -77,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a6d1d6ce05b51428ec16aef34ae527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasPickedUp: 1
+  hasPickedUp: 0
 --- !u!50 &5876312515913120309
 Rigidbody2D:
   serializedVersion: 4
@@ -125,6 +126,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2773342, y: 0.6510956}
   m_EdgeRadius: 0
+--- !u!114 &2223647539691300587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422672108969769007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5816402038266800602
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,6 +79,6 @@ public class Inventory : MonoBehaviour
         currentItemIndex = idx;
         UnusedItemsSetActiveFalse();
         items[currentItemIndex].SetActive(true);
-        weaponHolderController.currentWeapon = items[currentItemIndex].GetComponent<Weapon>();
+        weaponHolderController.currentWeapon = items[currentItemIndex].GetComponent<RangeWeapon>();
     }
 }

@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class RangeWeapon : Weapon
+public class RangeWeapon : MonoBehaviourPun
 {
+    public PlayerController owner;
+
     public string weaponName;
 
     [Header("SHOTGUN")]
@@ -27,18 +30,25 @@ public class RangeWeapon : Weapon
     [Header("COMPONENTS")]
     public GameObject projectile;
     public Transform firePoint;
+    private PhotonView PV;
 
     [Header("EFFECTS")]
     public GameObject shootEffect;
 
-    public delegate void shootCallback(float angle, float force);
-    public shootCallback OnShoot;
 
     private void Start() {
-        bulletsLeft = magazineSize;    
+        bulletsLeft = magazineSize;
+        PV = GetComponent<PhotonView>();
+        // if(!PV.IsMine){
+        //     Destroy(this);
+        //     // Destroy(rb);
+        //     // Destroy(canvas);
+        //     // Destroy(camera.gameObject);
+        // }
     }
 
-    public override void Use(){
+    public void Use(){
+        if(!PV.IsMine) return;
         if(!canShoot) return;
         if(isReloading) return;
         if(!HaveEnoughBullets()){
@@ -61,7 +71,7 @@ public class RangeWeapon : Weapon
 
     #region SHOOT_TYPES
     private void AutomaticShoot(){
-        ShootBulletWithAngleRotation((firePoint.eulerAngles.z + 90) % 360);
+        PV.RPC("ShootBulletWithAngleRotation", RpcTarget.All, (firePoint.eulerAngles.z + 90) % 360);
         bulletsLeft--;
         Invoke("SetCanShootTrue", timeBetweenShoots);
         canShoot = false;
@@ -70,7 +80,7 @@ public class RangeWeapon : Weapon
         float[] bulletDirection = this.GetBulletDirections(this.shotgunRange, (firePoint.eulerAngles.z + 90) % 360 , this.bulletsPerTap);
         foreach (float angleDir in bulletDirection)
         {
-            this.ShootBulletWithAngleRotation(angleDir);
+            PV.RPC("ShootBulletWithAngleRotation", RpcTarget.All, angleDir);
             bulletsLeft--;
         }
         
@@ -79,10 +89,15 @@ public class RangeWeapon : Weapon
     }
     #endregion
 
+    [PunRPC]
     private void ShootBulletWithAngleRotation(float angle){
+        if(!PV.IsMine) return;
+        
         GameObject bullet = Instantiate(projectile, firePoint.position, Quaternion.Euler(new Vector3(0, 0, angle)));
+        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>());
         bullet.GetComponent<Bullet>().targetKnockback = targetKnockback;
         //AudioManager.instance.Play("Shoot1");
+        
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(bullet.transform.right * shootForce, ForceMode2D.Impulse);
         ScreenShakeController.instance.StartShake(0.1f, 0.1f);
@@ -92,8 +107,7 @@ public class RangeWeapon : Weapon
         if(CanReceiveKnockback(owner.gameObject)){
             AddKnockback(owner.gameObject, angle, controllerKnockback / (isShotgun ? bulletsPerTap : 1));
         }
-        // Delegate
-        //OnShoot(angle, controllerKnockback / (isShotgun ? bulletsPerTap : 1));
+
     }
 
     private float[] GetBulletDirections(float rangeOfShoot, float centerOfRange, int nBullets){
