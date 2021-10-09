@@ -42,6 +42,13 @@ MonoBehaviour:
   - ShootBulletWithAngleRotation
   - Attack
   - RPC_TakeDamage
+  - RPC_Knockback
+  - RPC_TakeHit
+  - RPC_AddPoint
+  - RPC_CreatePlayer
+  - InitScoreboard
+  - RPC_AddPlayer
+  - RPC_UpdateHealthBar
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

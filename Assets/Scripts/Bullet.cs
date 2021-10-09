@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Bullet : MonoBehaviour
 {
@@ -10,9 +11,12 @@ public class Bullet : MonoBehaviour
     public bool stayOnCollisionLayer;
     public float damage;
     public float targetKnockback;
+    public bool isCopy = false;
+    public int ownerID;
 
     void Start()
     {
+        // PV = GetComponent<PhotonView>();
         Invoke("DestroyBullet", lifetime);
     }
 
@@ -24,16 +28,17 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D col) {
         if((whatIsTarget.value & (1 << col.gameObject.layer)) > 0){
             float angle = transform.rotation.eulerAngles.z + 180;
-            if(CanReceiveKnockback(col.gameObject)){
-                AddKnockback(col.gameObject, angle, targetKnockback);
-            }
+            if(!isCopy){
+                if(CanReceiveKnockback(col.gameObject)){
+                    AddKnockback(col.gameObject, angle, targetKnockback);
+                }
 
+                if(CanBeDamaged(col.gameObject)){
+                    Damage(col.gameObject, damage);
+                }
+            }
             if(CanBeHit(col.gameObject)){
                 Hit(col.gameObject, angle);
-            }
-
-            if(CanBeDamaged(col.gameObject)){
-                Damage(col.gameObject, damage);
             }
             DestroyBullet();
         }
@@ -73,7 +78,7 @@ public class Bullet : MonoBehaviour
     }
 
     private void Damage(GameObject go, float amount){
-        go.GetComponent<IDamageable>().TakeDamage(amount);
+        go.GetComponent<IDamageable>().TakeDamage(amount, ownerID);
     }
 
 }

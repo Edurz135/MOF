@@ -9,7 +9,7 @@ public class InputHandler : MonoBehaviour
     public JoystickCommand joystickCommand;
     public PickUpCommand pickUpCommand;
     public JumpCommand jumpCommand;
-    public Joystick joystick;
+    //public Joystick joystick;
     public PlayerController player;
     public KeyCode pickUpButton;
     public KeyCode jumpButton;
@@ -21,7 +21,7 @@ public class InputHandler : MonoBehaviour
         //if(Input.GetAxis("Horizontal") != 0) horizontalMoveButton.execute(player);
         if(Input.GetKeyDown(pickUpButton)) pickUpCommand.execute(player);
         if(Input.GetKeyDown(jumpButton)) jumpCommand.execute(player);
-        if(joystick.Direction.magnitude > 0.1f) joystickCommand.execute(player, joystick);
+        //if(joystick.Direction.magnitude > 0.1f) joystickCommand.execute(player, joystick);
         // if(dir.magnitude > 0.1f) joystickCommand.execute(player, dir);
     }
 

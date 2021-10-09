@@ -56,7 +56,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2542411375926216253}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.684, y: 0, z: 0}
+  m_LocalPosition: {x: 0.51, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8828008544554315684}
@@ -209,12 +209,12 @@ MonoBehaviour:
   shotgunRange: 30
   bulletsPerTap: 4
   shootForce: 20
-  timeBetweenShoots: 0.3
+  timeBetweenShoots: 0.1
   reloadTime: 1
   magazineSize: 12
   bulletsLeft: 12
-  controllerKnockback: 350
-  targetKnockback: 550
+  controllerKnockback: 15
+  targetKnockback: 10
   projectile: {fileID: 8841947993276903315, guid: 9cfc9cb9b92dcd24490a983801016075,
     type: 3}
   firePoint: {fileID: 7342114144902147289}

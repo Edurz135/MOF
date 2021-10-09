@@ -39,12 +39,6 @@ public class RangeWeapon : MonoBehaviourPun
     private void Start() {
         bulletsLeft = magazineSize;
         PV = GetComponent<PhotonView>();
-        // if(!PV.IsMine){
-        //     Destroy(this);
-        //     // Destroy(rb);
-        //     // Destroy(canvas);
-        //     // Destroy(camera.gameObject);
-        // }
     }
 
     public void Use(){
@@ -71,6 +65,9 @@ public class RangeWeapon : MonoBehaviourPun
 
     #region SHOOT_TYPES
     private void AutomaticShoot(){
+        if(CanReceiveKnockback(owner.gameObject)){
+            AddKnockback(owner.gameObject, (firePoint.eulerAngles.z + 90) % 360, controllerKnockback);
+        }
         PV.RPC("ShootBulletWithAngleRotation", RpcTarget.All, (firePoint.eulerAngles.z + 90) % 360);
         bulletsLeft--;
         Invoke("SetCanShootTrue", timeBetweenShoots);
@@ -78,12 +75,14 @@ public class RangeWeapon : MonoBehaviourPun
     }
     private void ShotgunShoot(){
         float[] bulletDirection = this.GetBulletDirections(this.shotgunRange, (firePoint.eulerAngles.z + 90) % 360 , this.bulletsPerTap);
-        foreach (float angleDir in bulletDirection)
-        {
+        foreach (float angleDir in bulletDirection) {
             PV.RPC("ShootBulletWithAngleRotation", RpcTarget.All, angleDir);
             bulletsLeft--;
         }
         
+        if(CanReceiveKnockback(owner.gameObject)){
+            AddKnockback(owner.gameObject, (firePoint.eulerAngles.z + 90) % 360, controllerKnockback);
+        }
         Invoke("SetCanShootTrue", timeBetweenShoots);
         canShoot = false;
     }
@@ -91,22 +90,23 @@ public class RangeWeapon : MonoBehaviourPun
 
     [PunRPC]
     private void ShootBulletWithAngleRotation(float angle){
-        if(!PV.IsMine) return;
         
         GameObject bullet = Instantiate(projectile, firePoint.position, Quaternion.Euler(new Vector3(0, 0, angle)));
         Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>());
         bullet.GetComponent<Bullet>().targetKnockback = targetKnockback;
+        bullet.GetComponent<Bullet>().ownerID = owner.playerID;
+        if(!PV.IsMine){
+            bullet.GetComponent<Bullet>().isCopy = true;
+        }
         //AudioManager.instance.Play("Shoot1");
         
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(bullet.transform.right * shootForce, ForceMode2D.Impulse);
+        
+        
         ScreenShakeController.instance.StartShake(0.1f, 0.1f);
         
         Instantiate(shootEffect, firePoint.position, Quaternion.LookRotation(DegreesToVector2(angle)));
-        
-        if(CanReceiveKnockback(owner.gameObject)){
-            AddKnockback(owner.gameObject, angle, controllerKnockback / (isShotgun ? bulletsPerTap : 1));
-        }
 
     }
 

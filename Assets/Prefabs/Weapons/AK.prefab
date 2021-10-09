@@ -55,12 +55,12 @@ MonoBehaviour:
   shotgunRange: 0
   bulletsPerTap: 0
   shootForce: 20
-  timeBetweenShoots: 0.3
+  timeBetweenShoots: 0.1
   reloadTime: 1
   magazineSize: 12
   bulletsLeft: 6
-  controllerKnockback: 300
-  targetKnockback: 500
+  controllerKnockback: 10
+  targetKnockback: 30
   projectile: {fileID: 524120818089688970, guid: 955f7e6b7bf07804ba736e27992b172a,
     type: 3}
   firePoint: {fileID: 1590925780127171390}
