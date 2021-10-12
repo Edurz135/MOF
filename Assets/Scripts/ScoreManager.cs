@@ -7,7 +7,7 @@ using TMPro;
 public class ScoreManager : MonoBehaviourPun {
     public static ScoreManager instance;
     public int player;
-    public int totalPoints = 10;
+    public int totalPoints = 16;
     private PhotonView PV;
     
     public List<int> names;
@@ -57,16 +57,26 @@ public class ScoreManager : MonoBehaviourPun {
         }
 
         currentPoints[count] = currentPoints[count] + 1;
-        Debug.Log(name + "  kill.");
         UpdateScoreList();
+        Debug.Log(name + "  kill.");
+        if(currentPoints[count] + 1 >= totalPoints) {
+            if(currentPlayerScoreList == null){
+                Debug.Log("currentPlayerScoreList null");
+                return;
+            }
+            PV.RPC("RPC_SetWinner", RpcTarget.All, name);
+        }
     }
 
     [PunRPC]
-    void InitScoreboard() {        
-        // nameText[player].text = "Player " + (player + 1);
-        // currentPoints[player] = 0;
+    void InitScoreboard() {
         UpdateScoreList();
-        totalPoints = 10;
+        totalPoints = 16;
+    }
+
+    [PunRPC]
+    void RPC_SetWinner(int name) {
+        currentPlayerScoreList.Win(name);
     }
 
     public void UpdateScoreList() {

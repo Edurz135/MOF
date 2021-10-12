@@ -49,6 +49,8 @@ MonoBehaviour:
   - InitScoreboard
   - RPC_AddPlayer
   - RPC_UpdateHealthBar
+  - RPC_SetWinner
+  - RPC_Name
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

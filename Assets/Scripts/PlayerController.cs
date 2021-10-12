@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IDamageabl
     [Space]
     public TMP_Text healthTxt;
     public TMP_Text ammoTxt;
+    public TMP_Text pingTxt;
+    public TMP_Text nameTxt;
     [Space]
     public Transform feetPos;
     public float checkRadius;
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IDamageabl
         AddObservable();
         currentHealth = baseHealth;
         UpdateUI();
+        
         if(!PV.IsMine) {
             Destroy(rb);
             Destroy(canvas);
@@ -63,15 +66,32 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IDamageabl
         }
     }
 
+    public void Name(int name) {
+        PV.RPC("RPC_Name", RpcTarget.All, name);
+    }
+
+    [PunRPC]
+    void RPC_Name(int name) {
+        nameTxt.text = name.ToString();
+    }
+
+
     // Update is called once per frame
     Vector2 shootDirection;
     void Update()
     {
         if(PV.IsMine) {
-            if (Input.GetKeyDown("z")) { // borrar
-                //timeM.DoSlowmotion();
-                // ScoreManager.instance.AddPoint(playerID);
-            }
+            // if (Input.GetKeyDown("z")) { // borrar
+            //     //timeM.DoSlowmotion();
+            //     AudioManager.instance.Play("die1");
+            //     // ScoreManager.instance.AddPoint(playerID);
+            // }
+            // if (Input.GetKeyDown("x")) { // borrar
+            //     AudioManager.instance.Play("hit1");
+            //     //timeM.DoSlowmotion();
+                
+            //     // ScoreManager.instance.AddPoint(playerID);
+            // }
             
             if(Input.GetKeyDown(KeyCode.LeftShift)) {
                 PickUp();
@@ -108,7 +128,7 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IDamageabl
     }
 
     public void Jump() {
-        if(beingknocked) return;
+        //if(beingknocked) return;
         isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
         if(isGrounded == true && Input.GetKeyDown("w")) {
             isJumping = true;
@@ -188,10 +208,12 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IDamageabl
 		if(!PV.IsMine)
 			return;
 
+        AudioManager.instance.Play("hit1");
 		currentHealth -= amount;
         healthBar.UpdateHealthBar(currentHealth / baseHealth);
 		if(currentHealth <= 0) {
             ScoreManager.instance.AddPoint(killerId);
+            AudioManager.instance.Play("die1");
             this.Die();
         }
 	}
@@ -203,6 +225,7 @@ public class PlayerController : MonoBehaviour, IKnockback, IHittable, IDamageabl
     void UpdateUI() {
         healthTxt.text = "HEALTH: " + currentHealth;
         ammoTxt.text = weaponHolder.currentWeapon.bulletsLeft.ToString();
+        pingTxt.text = "PING: " + PhotonNetwork.GetPing().ToString();
     }
 
     private Vector2 DegreesToVector2(float angle) {

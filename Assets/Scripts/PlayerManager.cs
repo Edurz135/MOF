@@ -33,6 +33,7 @@ public class PlayerManager : MonoBehaviour
 		ScoreManager.instance.currentPlayerScoreList = playerController.scoreList; // Update ScoreList on ScoreManager
 		ScoreManager.instance.UpdateScoreList();
 		playerController.playerID = PV.ViewID;
+		playerController.Name(PV.ViewID);
 	}
 
 

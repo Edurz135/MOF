@@ -20,6 +20,7 @@ public class RangeWeapon : MonoBehaviourPun
     private bool canShoot = true;
     public float reloadTime;
     private bool isReloading = false;
+    public string shootSound;
 
     public int magazineSize;
     public int bulletsLeft;
@@ -90,24 +91,29 @@ public class RangeWeapon : MonoBehaviourPun
 
     [PunRPC]
     private void ShootBulletWithAngleRotation(float angle){
-        
-        GameObject bullet = Instantiate(projectile, firePoint.position, Quaternion.Euler(new Vector3(0, 0, angle)));
-        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>());
-        bullet.GetComponent<Bullet>().targetKnockback = targetKnockback;
-        bullet.GetComponent<Bullet>().ownerID = owner.playerID;
-        if(!PV.IsMine){
-            bullet.GetComponent<Bullet>().isCopy = true;
+        try
+        {
+            GameObject bullet = Instantiate(projectile, firePoint.position, Quaternion.Euler(new Vector3(0, 0, angle)));
+            Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>());
+            bullet.GetComponent<Bullet>().targetKnockback = targetKnockback;
+            bullet.GetComponent<Bullet>().ownerID = owner.playerID;
+            if(!PV.IsMine) {
+                bullet.GetComponent<Bullet>().isCopy = true;
+            }
+            AudioManager.instance.Play(shootSound);
+            
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            rb.AddForce(bullet.transform.right * shootForce, ForceMode2D.Impulse);
+            
+            
+            ScreenShakeController.instance.StartShake(0.1f, 0.1f);
+            
+            Instantiate(shootEffect, firePoint.position, Quaternion.LookRotation(DegreesToVector2(angle)));
         }
-        //AudioManager.instance.Play("Shoot1");
-        
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.AddForce(bullet.transform.right * shootForce, ForceMode2D.Impulse);
-        
-        
-        ScreenShakeController.instance.StartShake(0.1f, 0.1f);
-        
-        Instantiate(shootEffect, firePoint.position, Quaternion.LookRotation(DegreesToVector2(angle)));
-
+        catch (System.Exception)
+        {
+            Debug.Log("Error");
+        }
     }
 
     private float[] GetBulletDirections(float rangeOfShoot, float centerOfRange, int nBullets){

@@ -56,7 +56,8 @@ MonoBehaviour:
   bulletsPerTap: 0
   shootForce: 20
   timeBetweenShoots: 0.1
-  reloadTime: 1
+  reloadTime: 0
+  shootSound: shoot3
   magazineSize: 12
   bulletsLeft: 6
   controllerKnockback: 10
@@ -238,7 +239,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5816402038266800602}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
   m_Name: 
